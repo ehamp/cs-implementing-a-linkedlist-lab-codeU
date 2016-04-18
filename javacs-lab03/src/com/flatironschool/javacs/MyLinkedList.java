@@ -39,6 +39,9 @@ public class MyLinkedList<E> implements List<E> {
 			this.next = next;
 		}
 		public String toString() {
+			if(cargo == null){ 
+				return "Node("+ "null" + ")";
+			}
 			return "Node(" + cargo.toString() + ")";
 		}
 	}
@@ -85,8 +88,30 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public void add(int index, E element) {
-		// TODO: fill this in
+		if(index == 0){
+			Node newNode = new Node(element, head); 
+			head = newNode;
+			size++;
+			return;
+		}
+		int counter = 0;
+		Node node = head;
+		Node left; 
+		for( ; node != null; node = node.next){
+			if(counter == index - 1){
+				left = node; 
+				Node right = node.next;
+				Node n = new Node(element, right);
+				left.next = n;
+				size++;
+				return;
+			}
+			counter++;
+		}
+		return;
 	}
+
+
 
 	@Override
 	public boolean addAll(Collection<? extends E> collection) {
@@ -146,7 +171,17 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public int indexOf(Object target) {
-		// TODO: fill this in
+		if(head == null){
+			return -1;
+		}
+		Node node = head;
+		int counter = 0;
+   		for ( ; node != null; node = node.next) {	
+            if(equals(target, node.cargo)){
+            	return counter;
+            }
+            counter++;
+        }
 		return -1;
 	}
 
@@ -201,14 +236,49 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public boolean remove(Object obj) {
-		// TODO: fill this in
+		Node left = null;
+		Node node = head;
+		if(equals(head.cargo, obj)){
+			head = head.next;
+			size --;
+			return true;
+		}
+		for( ; node.next != null; node = node.next){
+			if(equals(obj, node.next.cargo)){
+				left = node; 
+				Node right = node.next.next;
+				left.next = right;
+				size--;
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public E remove(int index) {
-		// TODO: fill this in
-		return null;
+		E temp = null;
+		if(index == 0){
+			temp = (E) head.cargo;
+			head = head.next;
+			size--;
+			return temp;
+		}
+		int counter = 0;
+		Node node = head;
+		Node left; 
+		for( ; node != null; node = node.next){
+			if(counter == index - 1){
+				left = node; 
+				temp = (E) node.next.cargo;
+				Node right = node.next.next;
+				left.next = right;
+				size--;
+				break;
+			}
+			counter++;
+		}
+		return temp;
 	}
 
 	@Override

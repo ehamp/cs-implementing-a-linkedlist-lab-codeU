@@ -11,9 +11,11 @@ import static org.hamcrest.CoreMatchers.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
+
 
 /**
  * @author downey
@@ -80,12 +82,15 @@ public class MyLinkedListTest {
 		} catch (IndexOutOfBoundsException e) {} // good
 		
 		mll.add(0, 6);
+		assertThat(mll.size(), is(5));
 		//System.out.println(Arrays.toString(mal.toArray()));
 		assertThat(mll.get(0), is(6));
 
 		mll.add(5, 7);
-		//System.out.println(Arrays.toString(mal.toArray()));
-		assertThat(mll.get(5), is(new Integer(7)));
+		assertThat(mll.size(), is(6));
+
+		//System.out.println(Arrays.toString(mll.toArray()));
+		assertThat(mll.get(5), is(new Integer(7))); //this is where it fails
 	}
 
 	/**
